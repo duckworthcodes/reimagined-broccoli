@@ -1,0 +1,41 @@
+<div class="register">   
+<form action="C:\Users\gurde\OneDrive\Desktop\New folder\submitted.html">
+   <div class="container">
+     
+     <p>Please recheck the information you entered before submitting</p>
+</div>
+<br>
+<div>
+<label for="First Name">First Name</label>
+<input type="text" placeholder="Enter here" name="First Name" required>
+</div>
+<br>
+<div>
+<label for="Last Name">Last Name</label>
+<input type="text" placeholder="Enter here" name="Last name" required>
+</div>
+<br>
+<div>
+<label for="Gender"><b>Gender</b></label>
+<input type="radio" name="Gender">Male
+<input type="radio" name="Gender">Female
+<input type="radio" name="Gender">Others
+</div>
+<br>
+<div>
+<label for="Email">Email</label>
+<input type="text" placeholder="Enter here" name="Email" required>
+</div>
+<br>
+<div>
+<label for="Age">Age</label>
+<input type="text" placeholder="Enter here" name="Email" required>
+</div>
+<br>
+<br>
+<div>
+<input type="submit" value="submit">
+<input type="reset" value="reset">
+</div>
+</form>
+</div>

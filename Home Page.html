@@ -1,0 +1,587 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Just For Me - Streetwear & Vintage Clothing</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        :root {
+            --primary: #9933FF;
+            --secondary: #111111;
+            --accent: #00FFCC;
+            --text: #111111;
+            --light-gray: #f2f2f2;
+            --gradient: linear-gradient(to right, #9933FF, #00FFCC);
+        }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+        body { background-color: #fff; color: var(--text); line-height: 1.6; overflow-x: hidden; }
+        
+        /* Progress Bar */
+        .progress-bar { position: fixed; top: 0; left: 0; width: 0; height: 4px; background: var(--gradient); z-index: 101; transition: width 0.3s ease; }
+        
+        /* Header */
+        header { background-color: #fff; position: sticky; top: 0; z-index: 100; box-shadow: 0 2px 20px rgba(0,0,0,0.1); }
+        .main-header { display: flex; justify-content: space-between; align-items: center; padding: 18px 5%; transition: padding 0.3s ease; }
+        .main-header.shrink { padding: 10px 5%; }
+        .logo { 
+            font-size: 1.8rem; 
+            font-weight: 800; 
+            background: var(--gradient); 
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent; 
+            text-decoration: none; 
+            transition: font-size 0.3s ease; 
+        }
+        .main-header.shrink .logo { font-size: 1.4rem; }
+        .nav-links { display: flex; list-style: none; }
+        .nav-links li { margin-left: 30px; }
+        .nav-links a { text-decoration: none; color: var(--secondary); font-weight: 600; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--primary); }
+        .cart-icon { position: relative; cursor: pointer; }
+        .cart-count { position: absolute; top: -8px; right: -8px; background: var(--gradient); color: white; border-radius: 50%; width: 20px; height: 20px; display: flex; justify-content: center; align-items: center; font-size: 0.8rem; }
+        .menu-toggle { display: none; cursor: pointer; font-size: 1.5rem; }
+        
+        /* Hero Slider */
+        .hero-slider { height: 90vh; position: relative; overflow: hidden; }
+        .hero-slide { position: absolute; top: 0; left: 0; width: 100%; height: 100%; opacity: 0; transition: opacity 0.8s ease; background-size: cover; background-position: center; display: flex; flex-direction: column; justify-content: center; align-items: center; color: white; text-align: center; padding: 0 20px; }
+        .hero-slide.active { opacity: 1; }
+        .slide-1 { background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('WhatsApp Image 2025-03-24 at 16.37.16_7202c51d.jpg'); }
+        .slide-2 { background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://muksweta.com/cdn/shop/files/Artboard1_152e342e-8bed-4178-83c0-282b13bcb267.jpg?v=1685357012'); }
+        .slide-3 { background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://media.voguebusiness.com/photos/62712dead585cd7c55089e4b/master/w_1600%2Cc_limit/recovery-sportswear-voguebus-may-22-inline-2.jpg'); }
+        .slide-4 { background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://media.voguebusiness.com/photos/62712dead585cd7c55089e4b/master/w_1600%2Cc_limit/recovery-sportswear-voguebus-may-22-inline-2.jpg'); }
+        .slide-5 { background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('https://media.voguebusiness.com/photos/62712dead585cd7c55089e4b/master/w_1600%2Cc_limit/recovery-sportswear-voguebus-may-22-inline-2.jpg'); }
+        .hero-slider-dots { position: absolute; bottom: 30px; left: 50%; transform: translateX(-50%); display: flex; }
+        .hero-slider-dot { width: 12px; height: 12px; background-color: rgba(255,255,255,0.5); border-radius: 50%; margin: 0 8px; cursor: pointer; }
+        .hero-slider-dot.active { background-color: var(--accent); }
+        .cta-btn { background: var(--gradient); color: white; padding: 12px 30px; border-radius: 30px; text MATERIAL-decoration: none; font-weight: 600; text-transform: uppercase; }
+        
+        /* Featured Categories */
+        .featured-categories { padding: 80px 5%; text-align: center; }
+        .section-title { 
+            font-size: 2.5rem; 
+            margin-bottom: 20px; 
+            background: var(--gradient); 
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent; 
+        }
+        .categories-slider { margin-top: 50px; position: relative; overflow: hidden; }
+        .categories-slide { display: flex; transition: transform 0.5s ease; }
+        .category-card { min-width: calc(33.333% - 20px); height: 400px; margin: 0 10px; perspective: 1000px; }
+        .card-inner { position: relative; width: 100%; height: 100%; transition: transform 0.6s; transform-style: preserve-3d; }
+        .category-card:hover .card-inner { transform: rotateY(180deg); }
+        .card-front, .card-back { position: absolute; width: 100%; height: 100%; backface-visibility: hidden; border-radius: 20px; overflow: hidden; }
+        .card-back { background: var(--secondary); color: white; display: flex; flex-direction: column; justify-content: center; align-items: center; transform: rotateY(180deg); }
+        .zoom-container { position: relative; overflow: hidden; height: 100%; }
+        .zoom-img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.5s ease; }
+        .category-card:hover .zoom-img { transform: scale(1.2); }
+        .category-card-content { position: absolute; bottom: 0; left: 0; width: 100%; padding: 30px; background: linear-gradient(transparent, rgba(0,0,0,0.8)); color: white; }
+        .quick-view { position: absolute; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0, 0, 0, 0.8); color: white; display: flex; flex-direction: column; justify-content: center; align-items: center; opacity: 0; transition: opacity 0.3s ease; pointer-events: none; }
+        .category-card:hover .quick-view { opacity: 1; pointer-events: auto; }
+        .quick-add { background: var(--gradient); color: white; border: none; padding: 8px 20px; border-radius: 20px; cursor: pointer; }
+        .slider-nav button { background-color: rgba(255,255,255,0.9); border: none; color: var(--secondary); width: 50px; height: 50px; border-radius: 50%; font-size: 1.2rem; cursor: pointer; position: absolute; top: 50%; transform: translateY(-50%); }
+        .prev-category { left: 20px; }
+        .next-category { right: 20px; }
+        
+        /* White Strip for Category Card Images */
+        .white-strip {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 0; /* Start with 0 height */
+            background-color: rgba(255, 255, 255, 0.9);
+            transition: height 0.3s ease; /* Smooth transition for height */
+            z-index: 2; /* Above image, below quick-view */
+        }
+        
+        /* Cart Modal */
+        .cart-modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.5); display: none; z-index: 200; }
+        .cart-content { background: white; width: 400px; max-height: 80vh; overflow-y: auto; position: absolute; right: 0; top: 0; padding: 20px; box-shadow: -5px 0 15px rgba(0,0,0,0.2); }
+        .cart-content h3 { font-size: 1.8rem; margin-bottom: 20px; }
+        .cart-item { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; padding: 10px; border-bottom: 1px solid #ddd; }
+        .cart-item img { width: 50px; height: 50px; object-fit: cover; }
+        .cart-item-details { flex: 1; margin-left: 10px; }
+        .cart-item-details p { margin: 5px 0; }
+        .quantity-controls { display: flex; align-items: center; }
+        .quantity-controls button { background: var(--gradient); color: white; border: none; width: 25px; height: 25px; border-radius: 50%; cursor: pointer; }
+        .quantity-controls span { margin: 0 10px; }
+        .cart-subtotal { margin-top: 20px; font-size: 1.2rem; font-weight: 600; }
+        .cart-buttons { display: flex; justify-content: space-between; margin-top: 20px; }
+        .cart-buttons button { padding: 10px 20px; border-radius: 20px; cursor: pointer; }
+        .close-cart { background: var(--secondary); color: white; border: none; }
+        .checkout { background: var(--gradient); color: white; border: none; }
+        
+        /* Footer */
+        footer { background-color: var(--secondary); color: white; padding: 60px 5% 30px; }
+        .footer-content { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 40px; }
+        .footer-column h3 { font-size: 1.5rem; margin-bottom: 25px; }
+        .footer-links { list-style: none; }
+        .footer-links li { margin-bottom: 15px; }
+        .footer-links a { color: #ccc; text-decoration: none; }
+        .footer-links a:hover { color: white; }
+        .footer-social { display: flex; margin-top: 20px; }
+        .footer-social a { width: 40px; height: 40px; background: rgba(255,255,255,0.1); border-radius: 50%; margin-right: 10px; color: white; display: flex; justify-content: center; align-items: center; text-decoration: none; }
+        .footer-social a:hover { background: var(--gradient); }
+        .footer-contact-item { display: flex; align-items: center; margin-bottom: 20px; }
+        .footer-contact-item i { margin-right: 15px; }
+        .copyright { text-align: center; padding: 30px 0 0; margin-top: 40px; border-top: 1px solid rgba(255,255,255,0.1); }
+        
+        /* Back to Top */
+        .back-to-top { position: fixed; bottom: 30px; right: 30px; width: 50px; height: 50px; background: var(--gradient); color: white; border-radius: 50%; display: flex; justify-content: center; align-items: center; text-decoration: none; opacity: 0; visibility: hidden; transition: all 0.3s; }
+        .back-to-top.active { opacity: 1; visibility: visible; }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links { display: none; position: absolute; top: 100%; left: 0; width: 100%; background-color: white; flex-direction: column; padding: 20px 0; }
+            .nav-links.active { display: flex; }
+            .nav-links li { margin: 15px 0; }
+            .menu-toggle { display: block; }
+            .category-card { min-width: calc(100% - 20px); }
+            .cart-content { width: 100%; }
+        }
+    </style>
+</head>
+<body>
+    <div class="progress-bar"></div>
+    <header>
+        <div class="main-header">
+            <a href="#" class="logo">Made<span>ForMe</span></a>
+            <ul class="nav-links">
+                <li><a href="#">Home</a></li>
+                <li><a href="#">Shop</a></li>
+                <li><a href="#">Collections</a></li>
+                <li><a href="#">About</a></li>
+                <li><a href="#">Contact</a></li>
+            </ul>
+            <div class="cart-icon">
+                <i class="fas fa-shopping-bag"></i>
+                <span class="cart-count">0</span>
+            </div>
+            <div class="menu-toggle">
+                <i class="fas fa-bars"></i>
+            </div>
+        </div>
+    </header>
+
+    <section class="hero-slider">
+        <div class="hero-slide slide-1 active">
+            <h1>Streetwear</h1>
+            <p></p>
+            <a href="#" class="cta-btn">Shop Now</a>
+        </div>
+        <div class="hero-slide slide-2">
+            <h1>Formals</h1>
+            <p></p>
+            <a href="#" class="cta-btn">Explore Vintage</a>
+        </div>
+        <div class="hero-slide slide-3">
+            <h1>Sports</h1>
+            <p></p>
+            <a href="#" class="cta-btn">See Collections</a>
+        </div>
+        <div class="hero-slide slide-4">
+            <h1>Gothic Fashion</h1>
+            <p></p>
+            <a href="#" class="cta-btn">See Collections</a>
+        </div>
+        <div class="hero-slide slide-5">
+            <h1>Traditionals</h1>
+            <p></p>
+            <a href="#" class="cta-btn">See Collections</a>
+        </div>
+        <div class="hero-slider-dots">
+            <div class="hero-slider-dot active" data-slide="0"></div>
+            <div class="hero-slider-dot" data-slide="1"></div>
+            <div class="hero-slider-dot" data-slide="2"></div>
+            <div class="hero-slider-dot" data-slide="3"></div>
+            <div class="hero-slider-dot" data-slide="4"></div>
+        </div>
+    </section>
+    
+    <section class="featured-categories">
+        <h2 class="section-title">Our Collections</h2>
+        <div class="categories-slider">
+            <div class="categories-slide">
+                <div class="category-card">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="zoom-container">
+                                <div class="white-strip"></div>
+                                <img src="" alt="Streetwear" class="zoom-img">
+                            </div>
+                            <div class="category-card-content">
+                                <h3>Streetwear</h3>
+                                <p>Urban essentials</p>
+                            </div>
+                        </div>
+                        <div class="card-back">
+                            <h3>Streetwear</h3>
+                            <p>In Stock: 15</p>
+                            <a href="#">Shop Now</a>
+                        </div>
+                    </div>
+                    <div class="quick-view">
+                        <p>Sizes: S, M, L</p>
+                        <p>Colors: Black, White</p>
+                        <button class="quick-add" data-item="Streetwear Jacket" data-price="89.99">Quick Add</button>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="zoom-container">
+                                <div class="white-strip"></div>
+                                <img src="WhatsApp Image 2025-03-24 at 15.53.41_69a2bb96.jpg" alt="Sportswear" class="zoom-img">
+                            </div>
+                            <div class="category-card-content">
+                                <h3>Sportswear</h3>
+                                <p>Athletic vibes</p>
+                            </div>
+                        </div>
+                        <div class="card-back">
+                            <h3>Sportswear</h3>
+                            <p>In Stock: 20</p>
+                            <a href="#">Shop Now</a>
+                        </div>
+                    </div>
+                    <div class="quick-view">
+                        <p>Sizes: M, L, XL</p>
+                        <p>Colors: Red, Blue</p>
+                        <button class="quick-add" data-item="Sports Hoodie" data-price="59.99">Quick Add</button>
+                    </div>
+                </div>
+                <div class="category-card">
+                    <div class="card-inner">
+                        <div class="card-front">
+                            <div class="zoom-container">
+                                <div class="white-strip"></div>
+                                <img src="formal_shirts_for_me..._imresizer.jpg" alt="Formals" class="zoom-img">
+                            </div>
+                            <div class="category-card-content">
+                                <h3>Formals</h3>
+                                <p>Sharp elegance</p>
+                            </div>
+                        </div>
+                        <div class="card-back">
+                            <h3>Formals</h3>
+                            <p>In Stock: 10</p>
+                            <a href="#">Shop Now</a>
+                        </div>
+                    </div>
+                    <div class="quick-view">
+                        <p>Sizes: S, M, L</p>
+                        <p>Colors: Black, Grey</p>
+                        <button class="quick-add" data-item="Formal Shirt" data-price="79.99">Quick Add</button>
+                    </div>
+                </div>
+            </div>
+            <div class="slider-nav">
+                <button class="prev-category"><i class="fas fa-chevron-left"></i></button>
+                <button class="next-category"><i class="fas fa-chevron-right"></i></button>
+            </div>
+        </div>
+    </section>
+
+    <div class="cart-modal">
+        <div class="cart-content">
+            <h3>Your Cart</h3>
+            <div class="cart-items"></div>
+            <div class="cart-subtotal">Subtotal: $<span>0.00</span></div>
+            <div class="cart-buttons">
+                <button class="close-cart">Close</button>
+                <button class="checkout">Checkout</button>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <div class="footer-content">
+            <div class="footer-column">
+                <h3>Just For Me</h3>
+                <p>Your destination for premium streetwear and vintage clothing</p>
+                <div class="footer-social">
+                    <a href="#"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-tiktok"></i></a>
+                </div>
+            </div>
+            <div class="footer-column">
+                <h3>Shop</h3>
+                <ul class="footer-links">
+                    <li><a href="#">New Arrivals</a></li>
+                    <li><a href="#">Streetwear</a></li>
+                    <li><a href="#">Sportswear</a></li>
+                    <li><a href="#">Formals</a></li>
+                    <li><a href="#">Gothic Fashion</a></li>
+                    <li><a href="#">Traditional Wear</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Customer Care</h3>
+                <ul class="footer-links">
+                    <li><a href="#">Order Tracking</a></li>
+                    <li><a href="#">Returns & Exchange</a></li>
+                    <li><a href="#">Shipping Information</a></li>
+                    <li><a href="#">Size Guide</a></li>
+                    <li><a href="#">FAQ</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h3>Contact Us</h3>
+                <div class="footer-contact-item">
+                    <i class="fas fa-map-marker-alt"></i>
+                    <span>123 Fashion Street, Style City</span>
+                </div>
+                <div class="footer-contact-item">
+                    <i class="fas fa-phone"></i>
+                    <span>+1 (555) 123-4567</span>
+                </div>
+                <div class="footer-contact-item">
+                    <i class="fas fa-envelope"></i>
+                    <span><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="81e9e4ededeec1ebf4f2f5e7eef3ece4afe2eeec">[email&#160;protected]</a></span>
+                </div>
+            </div>
+        </div>
+        <div class="copyright">
+            <p>© 2025 Just For Me. All Rights Reserved.</p>
+        </div>
+    </footer>
+
+    <a href="#" class="back-to-top">
+        <i class="fas fa-arrow-up"></i>
+    </a>
+
+    <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script>
+    <script>
+        // Hero Slider
+        const heroSlides = document.querySelectorAll('.hero-slide');
+        const heroDots = document.querySelectorAll('.hero-slider-dot');
+        let currentSlide = 0;
+
+        function showSlide(index) {
+            heroSlides.forEach(slide => slide.classList.remove('active'));
+            heroDots.forEach(dot => dot.classList.remove('active'));
+            heroSlides[index].classList.add('active');
+            heroDots[index].classList.add('active');
+            currentSlide = index;
+        }
+
+        let slideInterval = setInterval(() => {
+            let nextSlide = (currentSlide + 1) % heroSlides.length;
+            showSlide(nextSlide);
+        }, 5000);
+
+        heroDots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                clearInterval(slideInterval);
+                showSlide(index);
+                slideInterval = setInterval(() => {
+                    let nextSlide = (currentSlide + 1) % heroSlides.length;
+                    showSlide(nextSlide);
+                }, 5000);
+            });
+        });
+
+        // Categories Slider (Auto-Sliding)
+        const categoriesSlide = document.querySelector('.categories-slide');
+        const prevCategoryBtn = document.querySelector('.prev-category');
+        const nextCategoryBtn = document.querySelector('.next-category');
+        const categoryCards = document.querySelectorAll('.category-card');
+        const categoriesSlider = document.querySelector('.categories-slider');
+        let categorySlidePosition = 0;
+        let categoryCardWidth = categoryCards[0].offsetWidth + 20;
+        let autoSlideInterval;
+
+        window.addEventListener('resize', () => {
+            categoryCardWidth = categoryCards[0].offsetWidth + 20;
+            updateSliderPosition();
+        });
+
+        function updateSliderPosition() {
+            categoriesSlide.style.transform = `translateX(${categorySlidePosition}px)`;
+        }
+
+        function getVisibleCards() {
+            if (window.innerWidth > 1200) return 3;
+            else if (window.innerWidth > 768) return 2;
+            else return 1;
+        }
+
+        function startAutoSlide() {
+            autoSlideInterval = setInterval(() => {
+                const maxPosition = (categoryCards.length - getVisibleCards()) * categoryCardWidth;
+                if (categorySlidePosition > -maxPosition) {
+                    categorySlidePosition -= categoryCardWidth;
+                } else {
+                    categorySlidePosition = 0;
+                }
+                updateSliderPosition();
+            }, 3000); // Slide every 3 seconds
+        }
+
+        function stopAutoSlide() {
+            clearInterval(autoSlideInterval);
+        }
+
+        nextCategoryBtn.addEventListener('click', () => {
+            stopAutoSlide();
+            const maxPosition = (categoryCards.length - getVisibleCards()) * categoryCardWidth;
+            if (categorySlidePosition > -maxPosition) {
+                categorySlidePosition -= categoryCardWidth;
+            } else {
+                categorySlidePosition = 0;
+            }
+            updateSliderPosition();
+            startAutoSlide();
+        });
+
+        prevCategoryBtn.addEventListener('click', () => {
+            stopAutoSlide();
+            if (categorySlidePosition < 0) {
+                categorySlidePosition += categoryCardWidth;
+            } else {
+                const maxPosition = (categoryCards.length - getVisibleCards()) * categoryCardWidth;
+                categorySlidePosition = -maxPosition;
+            }
+            updateSliderPosition();
+            startAutoSlide();
+        });
+
+        // Pause auto-slide on hover
+        categoriesSlider.addEventListener('mouseenter', stopAutoSlide);
+        categoriesSlider.addEventListener('mouseleave', startAutoSlide);
+
+        // Start auto-sliding on page load
+        startAutoSlide();
+
+        // Mobile Menu
+        const menuToggle = document.querySelector('.menu-toggle');
+        const navLinks = document.querySelector('.nav-links');
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        // Back to Top
+        const backToTopBtn = document.querySelector('.back-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) {
+                backToTopBtn.classList.add('active');
+            } else {
+                backToTopBtn.classList.remove('active');
+            }
+        });
+        backToTopBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        });
+
+        // Progress Bar
+        window.addEventListener('scroll', () => {
+            const winScroll = document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrolled = (winScroll / height) * 100;
+            document.querySelector('.progress-bar').style.width = scrolled + '%';
+        });
+
+        // Header Shrink
+        const header = document.querySelector('.main-header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('shrink');
+            } else {
+                header.classList.remove('shrink');
+            }
+        });
+
+        // Enhanced Cart System
+        const cartModal = document.querySelector('.cart-modal');
+        const cartItemsContainer = document.querySelector('.cart-items');
+        const cartCount = document.querySelector('.cart-count');
+        const cartSubtotal = document.querySelector('.cart-subtotal span');
+        const cartIcon = document.querySelector('.cart-icon');
+        const closeCartBtn = document.querySelector('.close-cart');
+        let cart = [];
+
+        function updateCart() {
+            cartItemsContainer.innerHTML = '';
+            let subtotal = 0;
+            cart.forEach((item, index) => {
+                const itemTotal = item.price * item.quantity;
+                subtotal += itemTotal;
+                cartItemsContainer.innerHTML += `
+                    <div class="cart-item" data-index="${index}">
+                        <img src="/api/placeholder/50/50" alt="${item.name}">
+                        <div class="cart-item-details">
+                            <p>${item.name}</p>
+                            <p>$${itemTotal.toFixed(2)}</p>
+                        </div>
+                        <div class="quantity-controls">
+                            <button class="decrease">-</button>
+                            <span>${item.quantity}</span>
+                            <button class="increase">+</button>
+                        </div>
+                    </div>
+                `;
+            });
+            cartCount.textContent = cart.reduce((sum, item) => sum + item.quantity, 0);
+            cartSubtotal.textContent = subtotal.toFixed(2);
+        }
+
+        document.querySelectorAll('.quick-add').forEach(btn => {
+            btn.addEventListener('click', () => {
+                const itemName = btn.dataset.item;
+                const itemPrice = parseFloat(btn.dataset.price);
+                const existingItem = cart.find(item => item.name === itemName);
+                if (existingItem) {
+                    existingItem.quantity++;
+                } else {
+                    cart.push({ name: itemName, price: itemPrice, quantity: 1 });
+                }
+                updateCart();
+                cartModal.style.display = 'block';
+            });
+        });
+
+        cartIcon.addEventListener('click', () => {
+            cartModal.style.display = 'block';
+        });
+
+        closeCartBtn.addEventListener('click', () => {
+            cartModal.style.display = 'none';
+        });
+
+        cartItemsContainer.addEventListener('click', (e) => {
+            const index = e.target.closest('.cart-item')?.dataset.index;
+            if (!index) return;
+            if (e.target.classList.contains('increase')) {
+                cart[index].quantity++;
+            } else if (e.target.classList.contains('decrease')) {
+                cart[index].quantity--;
+                if (cart[index].quantity <= 0) cart.splice(index, 1);
+            }
+            updateCart();
+        });
+
+        // White Strip on Upper Hover
+        document.querySelectorAll('.zoom-container').forEach(container => {
+            const strip = container.querySelector('.white-strip');
+            container.addEventListener('mousemove', (e) => {
+                const rect = container.getBoundingClientRect();
+                const mouseY = e.clientY - rect.top; // Mouse position relative to container top
+                if (mouseY <= 100) { // Trigger if mouse is in top 100px
+                    strip.style.height = '50px'; // Show strip
+                } else {
+                    strip.style.height = '0'; // Hide strip
+                }
+            });
+            container.addEventListener('mouseleave', () => {
+                strip.style.height = '0'; // Hide strip when mouse leaves
+            });
+        });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9255c3060958450f',t:'MTc0MjgxNTA0My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
