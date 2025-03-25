@@ -17,7 +17,7 @@
             justify-content: center;
             align-items: center;
             min-height: 100vh;
-            background: linear-gradient(135deg, #1a1a1a, #ff4d4d);
+            background: #000000; /* Changed to solid black */
             overflow: hidden;
             position: relative;
         }
@@ -25,7 +25,7 @@
         .container {
             position: relative;
             width: 400px;
-            background: rgba(255, 255, 255, 0.9);
+            background: #ffffff; /* Kept as pure white */
             border-radius: 20px;
             padding: 30px;
             box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6);
@@ -35,6 +35,7 @@
             background-repeat: repeat;
         }
 
+        /* Rest of the CSS remains unchanged */
         .form-box {
             position: relative;
             width: 100%;
@@ -272,7 +273,7 @@
             const activeForm = container.classList.contains('active') 
                 ? document.querySelector('.form-box.signup') 
                 : document.querySelector('.form-box.login');
-            const height = activeForm.offsetHeight + 60; // Reduced padding
+            const height = activeForm.offsetHeight + 60;
             container.style.height = `${height}px`;
         }
 
@@ -290,5 +291,5 @@
             alert('Sign up successful! (Demo)');
         });
     </script>
-</body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'925dfbe2bab7bf8b',t:'MTc0MjkwMTI1OC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
