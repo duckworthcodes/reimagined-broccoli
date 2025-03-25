@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Just For Me - Streetwear & Vintage Clothing</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&family=UnifrakturMaguntia&display=swap" rel="stylesheet">
     <style>
         /* CSS Variables */
         :root {
@@ -149,8 +149,8 @@
             background-position: center;
             display: flex;
             flex-direction: column;
-            justify-content: space-between; /* Changed to space content */
-            align-items: flex-end; /* Align to right */
+            justify-content: space-between;
+            align-items: flex-end;
             color: white;
             padding: 40px 5%;
         }
@@ -171,8 +171,12 @@
         }
 
         .hero-slide-content h1 {
+            font-family: 'UnifrakturMaguntia', cursive; /* Teutonic-style bold font */
             font-size: 2.5rem;
             margin-bottom: 10px;
+            font-weight: 700;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
 
         .hero-slide-content p {
@@ -855,6 +859,15 @@
                                 <p>Athletic vibes</p>
                             </div>
                         </div>
+                        .card-back {
+                            background: var(--secondary);
+                            color: white;
+                            display: flex;
+                            flex-direction: column;
+                            justify-content: center;
+                            align-items: center;
+                            transform: rotateY(180deg);
+                        }
                         <div class="card-back">
                             <h3>Sportswear</h3>
                             <p>In Stock: 20</p>
