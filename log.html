@@ -1,0 +1,294 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>BonkersCorner - Login / Sign Up</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Arial', sans-serif;
+        }
+
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            background: linear-gradient(135deg, #1a1a1a, #ff4d4d);
+            overflow: hidden;
+            position: relative;
+        }
+
+        .container {
+            position: relative;
+            width: 400px;
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 20px;
+            padding: 30px;
+            box-shadow: 0 15px 50px rgba(0, 0, 0, 0.6);
+            overflow: hidden;
+            transition: all 0.5s ease;
+            background-image: url('data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAQAAAAECAYAAACp8Z5+AAAAG0lEQVQYV2NkYGD4z8DAwMgABXAGNgGwAECAAQEBBgAF/QLSAAAAAElFTkSuQmCC');
+            background-repeat: repeat;
+        }
+
+        .form-box {
+            position: relative;
+            width: 100%;
+            transition: transform 0.6s ease-in-out;
+        }
+
+        .form-box.login {
+            transform: translateX(0);
+        }
+
+        .form-box.signup {
+            position: absolute;
+            top: 0;
+            transform: translateX(100%);
+            width: 100%;
+            height: 100%;
+        }
+
+        .container.active .form-box.login {
+            transform: translateX(-100%);
+        }
+
+        .container.active .form-box.signup {
+            transform: translateX(0);
+        }
+
+        h2 {
+            text-align: center;
+            font-size: 1.8em;
+            color: #ff4d4d;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
+        }
+
+        .input-box {
+            position: relative;
+            margin: 20px 0;
+        }
+
+        .input-box input {
+            width: 100%;
+            padding: 10px;
+            background: rgba(255, 255, 255, 0.8);
+            border: 2px solid #333;
+            border-radius: 8px;
+            outline: none;
+            font-size: 0.9em;
+            color: #333;
+            transition: all 0.3s ease;
+        }
+
+        .input-box label {
+            position: absolute;
+            top: 50%;
+            left: 15px;
+            transform: translateY(-50%);
+            font-size: 0.9em;
+            color: #666;
+            pointer-events: none;
+            transition: all 0.3s ease;
+        }
+
+        .input-box input:focus ~ label,
+        .input-box input:valid ~ label {
+            top: -10px;
+            left: 10px;
+            font-size: 0.7em;
+            color: #ff4d4d;
+            background: #fff;
+            padding: 0 5px;
+        }
+
+        .input-box input:focus {
+            border-color: #ff4d4d;
+            box-shadow: 0 0 10px rgba(255, 77, 77, 0.5);
+        }
+
+        .btn {
+            width: 100%;
+            padding: 10px;
+            background: #ff4d4d;
+            border: none;
+            border-radius: 30px;
+            font-size: 1em;
+            color: #fff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .btn:hover {
+            background: #e63939;
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(230, 57, 57, 0.5);
+        }
+
+        .toggle-link {
+            text-align: center;
+            margin-top: 15px;
+            font-size: 0.85em;
+            color: #333;
+        }
+
+        .toggle-link a {
+            color: #ff4d4d;
+            text-decoration: none;
+            font-weight: bold;
+            transition: color 0.3s ease;
+        }
+
+        .toggle-link a:hover {
+            color: #e63939;
+            text-decoration: underline;
+        }
+
+        .bg-flair {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(circle, rgba(255, 77, 77, 0.3), transparent);
+            top: -50%;
+            left: -50%;
+            animation: rotate 10s linear infinite;
+            z-index: -1;
+            opacity: 0.7;
+        }
+
+        @keyframes rotate {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        .particle {
+            position: absolute;
+            width: 10px;
+            height: 10px;
+            background: rgba(255, 77, 77, 0.8);
+            border-radius: 50%;
+            animation: float 5s infinite ease-in-out;
+            z-index: -2;
+        }
+
+        .particle:nth-child(1) { top: 10%; left: 20%; animation-delay: 0s; }
+        .particle:nth-child(2) { top: 50%; left: 80%; animation-delay: 1s; }
+        .particle:nth-child(3) { top: 80%; left: 40%; animation-delay: 2s; }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-20px); }
+        }
+
+        @media (max-width: 450px) {
+            .container {
+                width: 90%;
+                padding: 20px;
+            }
+            h2 { font-size: 1.5em; }
+            .btn { font-size: 0.9em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="container" id="container">
+        <div class="bg-flair"></div>
+        <!-- Login Form -->
+        <div class="form-box login">
+            <h2>Login</h2>
+            <form id="login-form">
+                <div class="input-box">
+                    <input type="email" required>
+                    <label>Email</label>
+                </div>
+                <div class="input-box">
+                    <input type="password" required>
+                    <label>Password</label>
+                </div>
+                <button type="submit" class="btn">Login</button>
+                <div class="toggle-link">
+                    Don't have an account? <a href="#" id="signup-link">Sign Up</a>
+                </div>
+            </form>
+        </div>
+        <!-- Signup Form -->
+        <div class="form-box signup">
+            <h2>Sign Up</h2>
+            <form id="signup-form">
+                <div class="input-box">
+                    <input type="text" required>
+                    <label>Username</label>
+                </div>
+                <div class="input-box">
+                    <input type="email" required>
+                    <label>Email</label>
+                </div>
+                <div class="input-box">
+                    <input type="password" required>
+                    <label>Password</label>
+                </div>
+                <button type="submit" class="btn">Sign Up</button>
+                <div class="toggle-link">
+                    Already have an account? <a href="#" id="login-link">Login</a>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const container = document.getElementById('container');
+        const signupLink = document.getElementById('signup-link');
+        const loginLink = document.getElementById('login-link');
+        const loginForm = document.getElementById('login-form');
+        const signupForm = document.getElementById('signup-form');
+
+        // Toggle between forms
+        signupLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            container.classList.add('active');
+            adjustContainerHeight();
+        });
+
+        loginLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            container.classList.remove('active');
+            adjustContainerHeight();
+        });
+
+        // Adjust container height dynamically
+        function adjustContainerHeight() {
+            const activeForm = container.classList.contains('active') 
+                ? document.querySelector('.form-box.signup') 
+                : document.querySelector('.form-box.login');
+            const height = activeForm.offsetHeight + 60; // Reduced padding
+            container.style.height = `${height}px`;
+        }
+
+        // Initial height adjustment
+        window.addEventListener('load', adjustContainerHeight);
+
+        // Form submission feedback (demo)
+        loginForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Login successful! (Demo)');
+        });
+
+        signupForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            alert('Sign up successful! (Demo)');
+        });
+    </script>
+</body>
+</html>
