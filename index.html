@@ -149,11 +149,10 @@
             background-position: center;
             display: flex;
             flex-direction: column;
-            justify-content: center;
-            align-items: center;
+            justify-content: space-between; /* Changed to space content */
+            align-items: flex-end; /* Align to right */
             color: white;
-            text-align: center;
-            padding: 0 20px;
+            padding: 40px 5%;
         }
 
         .hero-slide.active {
@@ -165,6 +164,59 @@
         .slide-3 { background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url('project x image 2.1.jpeg'); }
         .slide-4 { background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(''); }
         .slide-5 { background-image: linear-gradient(rgba(0,0,0,0.5), rgba(0,0,0,0.5)), url(''); }
+
+        .hero-slide-content {
+            text-align: right;
+            max-width: 500px;
+        }
+
+        .hero-slide-content h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+
+        .hero-slide-content p {
+            font-size: 1.2rem;
+            margin-bottom: 5px;
+        }
+
+        .hero-slider-controls {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .cta-btn {
+            background: var(--gradient);
+            color: white;
+            padding: 12px 30px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            text-transform: uppercase;
+            transition: var(--transition);
+        }
+
+        .cta-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow);
+        }
+
+        .hero-slider-nav button {
+            background-color: rgba(255,255,255,0.2);
+            border: none;
+            color: white;
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .hero-slider-nav button:hover {
+            background-color: var(--accent);
+        }
 
         .hero-slider-dots {
             position: absolute;
@@ -186,22 +238,6 @@
 
         .hero-slider-dot.active {
             background-color: var(--accent);
-        }
-
-        .cta-btn {
-            background: var(--gradient);
-            color: white;
-            padding: 12px 30px;
-            border-radius: 30px;
-            text-decoration: none;
-            font-weight: 600;
-            text-transform: uppercase;
-            transition: var(--transition);
-        }
-
-        .cta-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: var(--shadow);
         }
 
         /* Featured Categories */
@@ -656,6 +692,14 @@
             .hero-slider {
                 height: 70vh;
             }
+
+            .hero-slide-content h1 {
+                font-size: 1.8rem;
+            }
+
+            .hero-slide-content p {
+                font-size: 1rem;
+            }
         }
     </style>
 </head>
@@ -687,29 +731,69 @@
     <!-- Hero Slider -->
     <section class="hero-slider">
         <div class="hero-slide slide-1 active">
-            <h1>Streetwear Revolution</h1>
-            <p>Discover the latest urban fashion trends</p>
-            <a href="#" class="cta-btn">Shop Now</a>
+            <div class="hero-slide-content">
+                <h1>Streetwear Revolution</h1>
+                <p>Discover the latest urban fashion trends</p>
+            </div>
+            <div class="hero-slider-controls">
+                <a href="#" class="cta-btn">Explore Now</a>
+                <div class="hero-slider-nav">
+                    <button class="prev-slide"><i class="fas fa-chevron-left"></i></button>
+                    <button class="next-slide"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
         </div>
         <div class="hero-slide slide-2">
-            <h1>Sportswear Elite</h1>
-            <p>Performance meets style</p>
-            <a href="#" class="cta-btn">Explore</a>
+            <div class="hero-slide-content">
+                <h1>Sportswear Elite</h1>
+                <p>Performance meets style</p>
+            </div>
+            <div class="hero-slider-controls">
+                <a href="#" class="cta-btn">Explore Now</a>
+                <div class="hero-slider-nav">
+                    <button class="prev-slide"><i class="fas fa-chevron-left"></i></button>
+                    <button class="next-slide"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
         </div>
         <div class="hero-slide slide-3">
-            <h1>Formal Elegance</h1>
-            <p>Timeless sophistication</p>
-            <a href="#" class="cta-btn">Browse</a>
+            <div class="hero-slide-content">
+                <h1>Formal Elegance</h1>
+                <p>Timeless sophistication</p>
+            </div>
+            <div class="hero-slider-controls">
+                <a href="#" class="cta-btn">Explore Now</a>
+                <div class="hero-slider-nav">
+                    <button class="prev-slide"><i class="fas fa-chevron-left"></i></button>
+                    <button class="next-slide"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
         </div>
         <div class="hero-slide slide-4">
-            <h1>Vintage Vibes</h1>
-            <p>Retro classics reborn</p>
-            <a href="#" class="cta-btn">Discover</a>
+            <div class="hero-slide-content">
+                <h1>Vintage Vibes</h1>
+                <p>Retro classics reborn</p>
+            </div>
+            <div class="hero-slider-controls">
+                <a href="#" class="cta-btn">Explore Now</a>
+                <div class="hero-slider-nav">
+                    <button class="prev-slide"><i class="fas fa-chevron-left"></i></button>
+                    <button class="next-slide"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
         </div>
         <div class="hero-slide slide-5">
-            <h1>Seasonal Drop</h1>
-            <p>New arrivals weekly</p>
-            <a href="#" class="cta-btn">Shop Now</a>
+            <div class="hero-slide-content">
+                <h1>Seasonal Drop</h1>
+                <p>New arrivals weekly</p>
+            </div>
+            <div class="hero-slider-controls">
+                <a href="#" class="cta-btn">Explore Now</a>
+                <div class="hero-slider-nav">
+                    <button class="prev-slide"><i class="fas fa-chevron-left"></i></button>
+                    <button class="next-slide"><i class="fas fa-chevron-right"></i></button>
+                </div>
+            </div>
         </div>
         <div class="hero-slider-dots">
             <div class="hero-slider-dot active" data-slide="0"></div>
@@ -899,6 +983,8 @@
         const elements = {
             heroSlides: document.querySelectorAll('.hero-slide'),
             heroDots: document.querySelectorAll('.hero-slider-dot'),
+            prevSlideBtns: document.querySelectorAll('.prev-slide'),
+            nextSlideBtns: document.querySelectorAll('.next-slide'),
             categoriesSlide: document.querySelector('.categories-slide'),
             prevCategoryBtn: document.querySelector('.prev-category'),
             nextCategoryBtn: document.querySelector('.next-category'),
@@ -943,6 +1029,31 @@
             dot.addEventListener('click', () => {
                 clearInterval(slideInterval);
                 showSlide(index);
+                slideInterval = setInterval(() => {
+                    const nextSlide = (state.currentSlide + 1) % elements.heroSlides.length;
+                    showSlide(nextSlide);
+                }, 5000);
+            });
+        });
+
+        // Hero Slider Navigation Buttons
+        elements.prevSlideBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                clearInterval(slideInterval);
+                const prevSlide = (state.currentSlide - 1 + elements.heroSlides.length) % elements.heroSlides.length;
+                showSlide(prevSlide);
+                slideInterval = setInterval(() => {
+                    const nextSlide = (state.currentSlide + 1) % elements.heroSlides.length;
+                    showSlide(nextSlide);
+                }, 5000);
+            });
+        });
+
+        elements.nextSlideBtns.forEach(btn => {
+            btn.addEventListener('click', () => {
+                clearInterval(slideInterval);
+                const nextSlide = (state.currentSlide + 1) % elements.heroSlides.length;
+                showSlide(nextSlide);
                 slideInterval = setInterval(() => {
                     const nextSlide = (state.currentSlide + 1) % elements.heroSlides.length;
                     showSlide(nextSlide);
